@@ -1,0 +1,9 @@
+article {
+    @import "@digitalocean/do-markdownit/styles";
+}
+
+#markdown-body {
+    width: 800px;
+    margin: auto;
+    padding: 10px;
+}
