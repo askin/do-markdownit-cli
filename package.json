@@ -1,0 +1,33 @@
+{
+  "name": "do-markdownit-cli",
+  "version": "0.0.1",
+  "description": "CLI for do-markdownit",
+  "main": "./bin/index.js",
+  "bin": {
+    "do-markdownit-cli": "bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/askin/do-markdownit-cli.git"
+  },
+  "keywords": [
+    "markdown",
+    "cli",
+    "markdown-it",
+    "do-markdown-it",
+    "html"
+  ],
+  "author": "Aşkın Özgür",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/askin/do-markdownit-cli/issues"
+  },
+  "homepage": "https://github.com/askin/do-markdownit-cli#readme",
+  "dependencies": {
+    "@digitalocean/do-markdownit": "^1.12.0",
+    "markdown-it": "^13.0.2"
+  }
+}
