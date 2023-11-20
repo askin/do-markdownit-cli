@@ -4,7 +4,12 @@ const md = require('markdown-it')({}).use(require('@digitalocean/do-markdownit')
 // const md = require('markdown-it')()
 const fs = require('fs');
 
-if (process.argv.length > 2) {
+if (process.stdin.isTTY) {
+    if (process.argv.length < 3) {
+	console.error("No file specified to read!!!");
+	return;
+    }
+
     let fileName = process.argv[2];
     fs.readFile(fileName, 'utf8', (err, data) => {
 	if (err) {
