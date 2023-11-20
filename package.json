@@ -1,5 +1,5 @@
 {
-  "name": "do-markdownit-cli",
+  "name": "@askinozgur/do-markdownit-cli",
   "version": "0.0.1",
   "description": "CLI for do-markdownit",
   "main": "./bin/index.js",
@@ -29,5 +29,6 @@
   "dependencies": {
     "@digitalocean/do-markdownit": "^1.12.0",
     "markdown-it": "^13.0.2"
-  }
+  },
+  "devDependencies": {}
 }
