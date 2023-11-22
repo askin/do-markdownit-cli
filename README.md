@@ -17,4 +17,9 @@ do-markdownit-cli < README.md
 
 # Read from file
 do-markdownit-cli README.md
+
+# Read from file with hot reload
+do-markdownit-cli README.md --hot-reload
 ```
+
+Hot reload use port `8080`
