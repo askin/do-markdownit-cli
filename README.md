@@ -1,6 +1,8 @@
 # do-markdownit-cli
 CLI for do-markdownit
 
+This tool is created to use with `markdown-preview-mode` on `emacs`. But it can be used standalone for any other editors.
+
 ## Install
 ```shell
 npm install @askinozgur/do-markdownit-cli -g
