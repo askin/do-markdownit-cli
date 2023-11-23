@@ -5,27 +5,36 @@ const fs = require('fs');
 const WebSocketServer = require('ws');
 const express = require('express');
 const path = require('path');
-const httpServerPort = 8080;
-const wsServerPort = 8181;
+const commander = require('commander');
 
-function readGenerateHtmlBody(fileName) {
+const wsServerPort = 8181;
+const { version } = require('../package.json');
+
+var fileNAme = undefined;
+
+const options = commander
+      .version(version, '-v, --version')
+      .usage('[OPTIONS]...', '-u', '--usage')
+      .argument('[fileNameArg]', 'File name')
+      .option('-p, --port <value>', 'Port', 0)
+      .option('--hot-reload', 'Enable hot reload', false)
+      .action((fileNameArg) => { fileName = fileNameArg; })
+      .parse(process.argv)
+      .opts();
+
+const isHotReloadActive = options.hotReload
+const httpServerPort = (options.port ? options.port : 0)
+
+function readAdnRenderMarkdownFile(fileName) {
     let data = fs.readFileSync(fileName, "utf8")
-    let rendered = md.render(data);
-    return "<div><span id='position-percentage'>5</span><div id='content'>" + rendered + "</div></div>";
+    return md.render(data);
+}
+
+function prepareForWebSocket(htmlBody) {
+    return `<div><span id='position-percentage'>5</span><div id='content'>${htmlBody}</div></div>`;
 }
 
 if (process.stdin.isTTY) {
-    let fileName = "";
-    let isHotReloadActive = false;
-
-    for(i = 2; i < process.argv.length; i++) {
-        if (process.argv[i] == "--hot-reload") {
-            isHotReloadActive = true;
-        } else {
-            fileName = process.argv[i];
-        }
-    }
-
     if (!fileName) {
         console.error("No file specified to read!!!");
         return;
@@ -35,31 +44,27 @@ if (process.stdin.isTTY) {
         const wss = new WebSocketServer.Server({ port: wsServerPort })
         wss.on('connection', function connection(ws) {
             ws.on('message', function message(data) {
-                ws.send(readGenerateHtmlBody(fileName));
+                ws.send(prepareForWebSocket(readAdnRenderMarkdownFile(fileName)));
             });
 
             fs.watchFile(fileName, {
                 bigint: false, persistent: true, interval: 4000,
             }, (curr, prev) => {
-                ws.send(readGenerateHtmlBody(fileName));
+                ws.send(prepareForWebSocket(readAdnRenderMarkdownFile(fileName)));
             });
         });
 
-        var server = express();
-        server.use('/', express.static(path.join(__dirname, '../public')));
-        server.listen(httpServerPort);
-        console.log("Open following url from browser: ")
-        console.log('http://localhost:' + httpServerPort)
-    } else {
-        fs.readFile(fileName, 'utf8', (err, data) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
+        var app = express();
+        app.use('/', express.static(path.join(__dirname, '../public')));
+        let server = app.listen(httpServerPort, function() {
+            let port = server.address().port;
 
-            let rendered = md.render(data);
-            process.stdout.write(rendered);
+            console.log("Open following url from browser: ")
+            console.log('http://localhost:%s', port)
         });
+    } else {
+        let rendered = readAdnRenderMarkdownFile(fileName)
+        process.stdout.write(rendered);
     }
 } else {
     let data = "";

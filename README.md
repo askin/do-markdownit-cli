@@ -24,4 +24,10 @@ do-markdownit-cli README.md
 do-markdownit-cli README.md --hot-reload
 ```
 
-Hot reload use port `8080`
+Hot reload use a random port but you can give a port
+
+```shell
+do-markdownit-cli README.md --hot-reload --port 8080
+```
+
+Use `--help` or `-h` to all parameters.
