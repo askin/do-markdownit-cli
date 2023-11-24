@@ -18,12 +18,14 @@ const options = commander
       .argument('[fileNameArg]', 'File name')
       .option('-p, --port <value>', 'Port', 0)
       .option('--hot-reload', 'Enable hot reload', false)
+      .option('--disable-open-browser', false)
       .action((fileNameArg) => { fileName = fileNameArg; })
       .parse(process.argv)
       .opts();
 
 const isHotReloadActive = options.hotReload
 const httpServerPort = (options.port ? options.port : 0)
+const openBrowser = !options.disableOpenBrowser
 
 function readAdnRenderMarkdownFile(fileName) {
     let data = fs.readFileSync(fileName, "utf8")
@@ -58,9 +60,14 @@ if (process.stdin.isTTY) {
         app.use('/', express.static(path.join(__dirname, '../public')));
         let server = app.listen(httpServerPort, function() {
             let port = server.address().port;
+            let url = `http://localhost:${port}`
 
             console.log("Open following url from browser: ")
-            console.log('http://localhost:%s', port)
+            console.log(url)
+
+            if (openBrowser) {
+                require("openurl").open(url, () => {});
+            }
         });
     } else {
         let rendered = readAdnRenderMarkdownFile(fileName)

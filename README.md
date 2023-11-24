@@ -31,3 +31,8 @@ do-markdownit-cli README.md --hot-reload --port 8080
 ```
 
 Use `--help` or `-h` to all parameters.
+
+Disable open browser
+```shell
+do-markdownit-cli README.md  --hot-reload --disable-open-browser
+```
