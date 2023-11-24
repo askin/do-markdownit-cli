@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
     <title>Markdown preview</title>
-    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 
     <script>
 
       (function($, undefined) {
-          var socket = new WebSocket("ws://localhost:8181");
+          var socket = new WebSocket("__WEB_SOCKET_URL_");
           socket.onopen = function() {
               socket.send("connect");
           };

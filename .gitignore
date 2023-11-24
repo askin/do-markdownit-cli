@@ -133,4 +133,4 @@ dist
 .sass-cache/
 
 # ignore styles
-public/style.css*
+public/static/style.css*
