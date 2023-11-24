@@ -1,6 +1,6 @@
 {
   "name": "@askinozgur/do-markdownit-cli",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "CLI for do-markdownit",
   "main": "./bin/index.js",
   "bin": {
@@ -36,5 +36,9 @@
     "openurl": "^1.1.1",
     "sass": "^1.69.5",
     "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.0"
   }
 }
